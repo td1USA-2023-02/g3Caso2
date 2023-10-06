@@ -35,8 +35,8 @@ plt.xlabel('Valor del Cliente (Total Sales)')
 plt.ylabel('Frecuencia de Compra (Frequency)')
 plt.title('Segmentación de Clientes por Valor y Frecuencia de Compra')
 plt.legend(title='Segmento')
+plt.savefig('grafseg.jpg', format='jpg')
 plt.show()
-# Guarda el gráfico en formato JPG
 
 
 
@@ -70,6 +70,7 @@ sns.barplot(data=top_and_bottom_products, x='Sales', y='Product Name', palette='
 plt.xlabel('Ventas')
 plt.ylabel('Producto')
 plt.title('Los 5 Productos Más y Menos Vendidos')
+plt.savefig('grafproducts.jpg', format='jpg')
 plt.show()
 
 #Lista de los productos más vendidos y menos vendidos
@@ -98,6 +99,7 @@ sns.barplot(data=categorias_mas_vendidas, x='Sales', y='Category', palette='viri
 plt.xlabel('Ventas')
 plt.ylabel('Categoría')
 plt.title('Las Categorías Más Vendidas')
+plt.savefig('grafcateg.jpg', format='jpg')
 plt.show()
 
 
@@ -133,6 +135,7 @@ plt.ylabel('Ventas')
 plt.title('Tendencias Estacionales en las Ventas')
 plt.legend(title='Año', loc='upper right')
 plt.xticks(range(1, 13), ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'])
+plt.savefig('graftiempo.jpg', format='jpg')
 plt.show()
 
 
