@@ -3,7 +3,7 @@ import openpyxl
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Lee los datos desde Excel
+# Lee los datos desde el Excel
 df = pd.read_excel('g3Caso2/Super Store.xlsx')
 
 ####Segmentación de Clientes
@@ -13,22 +13,16 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-# Calcula el valor del cliente (ventas totales por cliente) y la frecuencia de compra (número de compras por cliente)
 customer_data = df.groupby('Customer ID').agg({'Sales': 'sum', 'Order ID': 'count'}).reset_index()
 customer_data.rename(columns={'Sales': 'Total Sales', 'Order ID': 'Frequency'}, inplace=True)
-
-# Selecciona las características relevantes para la segmentación
 X = customer_data[['Total Sales', 'Frequency']]
 
-# Estandariza las características para que tengan media cero y varianza unitaria
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Utiliza el algoritmo K-Means para segmentar a los clientes en 4 grupos (puedes ajustar el número de grupos según tus necesidades)
 kmeans = KMeans(n_clusters=4, random_state=42)
 customer_data['Cluster'] = kmeans.fit_predict(X_scaled)
 
-# Crea un gráfico de dispersión que muestra los segmentos en función del valor del cliente y la frecuencia de compra
 plt.figure(figsize=(10, 6))
 sns.scatterplot(data=customer_data, x='Total Sales', y='Frequency', hue='Cluster', palette='viridis')
 plt.xlabel('Valor del Cliente (Total Sales)')
@@ -54,7 +48,6 @@ print(segment_summary)
 ####Análisis de Productos
 #Grafico de 5 productos mas vendidos y los menos vendidos
 
-# Agrupa los datos por el nombre del producto y suma las ventas
 product_sales = df.groupby('Product Name')['Sales'].sum().reset_index()
 
 # Ordena los productos por ventas en orden descendente (de mayor a menor)
@@ -87,13 +80,11 @@ print(bottom_products)
 
 #Grafico de las categorias mas vendidas
 
-# Agrupa los datos por la columna 'Category' y suma las ventas
 category_sales = df.groupby('Category')['Sales'].sum().reset_index()
 
-# Ordena las categorías por ventas en orden descendente (de mayor a menor)
 categorias_mas_vendidas = category_sales.nlargest(5, 'Sales')
 
-# Crea un gráfico de barras para mostrar las 5 categorías más vendidas
+# Crea un gráfico de barras 
 plt.figure(figsize=(10, 6))
 sns.barplot(data=categorias_mas_vendidas, x='Sales', y='Category', palette='viridis')
 plt.xlabel('Ventas')
@@ -104,20 +95,15 @@ plt.show()
 
 
 # Lista categorias mas vendidas 
-# Agrupa los datos por la columna 'Category' y suma las ventas
 category_sales = df.groupby('Category')['Sales'].sum().reset_index()
 
-# Ordena las categorías por ventas en orden descendente (de mayor a menor)
 categorias_mas_vendidas = category_sales.sort_values(by='Sales', ascending=False).head(5)
 
 
-# Imprime las categorías más vendidas
 print("Categorías más vendidas:")
 print(categorias_mas_vendidas)
 
 ####Análisis de Tiempo
-# Ordena los datos por fecha
-# Convierte la columna "Order Date" en un tipo de dato de fecha
 df['Order Date'] = pd.to_datetime(df['Order Date'])
 
 # Extrae el año y el mes de la columna "Order Date"
